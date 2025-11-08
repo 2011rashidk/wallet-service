@@ -8,7 +8,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Data
 public class AmountRequest {
     @NotNull
     @Min(0)

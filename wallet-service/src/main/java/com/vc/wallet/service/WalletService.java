@@ -43,8 +43,8 @@ public class WalletService {
 
     @Transactional
     public Double credit(Long walletId, double amount, String referenceId) {
-        if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
         Wallet w = wallets.findById(walletId).orElseThrow(() -> new IllegalArgumentException("Wallet not found: " + walletId));
+        if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
         w.setBalance(w.getBalance() + amount);
         wallets.save(w);
         var tx = WalletTransaction.builder()

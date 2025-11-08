@@ -1,0 +1,7 @@
+com\vc\wallet\repo\WalletRepository.class
+com\vc\wallet\repo\WalletTransactionRepository.class
+com\vc\wallet\model\BaseAudit.class
+com\vc\wallet\model\Wallet.class
+com\vc\wallet\model\WalletTransaction.class
+com\vc\wallet\dto\AmountRequest.class
+com\vc\wallet\WalletServiceApplication.class

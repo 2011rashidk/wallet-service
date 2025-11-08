@@ -1,5 +1,6 @@
 package com.vc.wallet.service;
 
+import com.vc.wallet.exception.NotFoundException;
 import com.vc.wallet.model.Wallet;
 import com.vc.wallet.model.WalletTransaction;
 import com.vc.wallet.repo.WalletRepository;
@@ -20,14 +21,14 @@ public class WalletService {
 
     @Transactional(readOnly = true)
     public Double getBalance(Long walletId) {
-        Wallet w = wallets.findById(walletId).orElseThrow(() -> new IllegalArgumentException("Wallet not found: " + walletId));
+        Wallet w = wallets.findById(walletId).orElseThrow(() -> new NotFoundException("Wallet not found: " + walletId));
         return w.getBalance();
     }
 
     @Transactional
     public Double debit(Long walletId, double amount, String referenceId) {
         if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
-        Wallet w = wallets.findById(walletId).orElseThrow(() -> new IllegalArgumentException("Wallet not found: " + walletId));
+        Wallet w = wallets.findById(walletId).orElseThrow(() -> new NotFoundException("Wallet not found: " + walletId));
         if (w.getBalance() < amount) throw new IllegalStateException("Insufficient balance");
         w.setBalance(w.getBalance() - amount);
         wallets.save(w);
@@ -43,7 +44,7 @@ public class WalletService {
 
     @Transactional
     public Double credit(Long walletId, double amount, String referenceId) {
-        Wallet w = wallets.findById(walletId).orElseThrow(() -> new IllegalArgumentException("Wallet not found: " + walletId));
+        Wallet w = wallets.findById(walletId).orElseThrow(() -> new NotFoundException("Wallet not found: " + walletId));
         if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
         w.setBalance(w.getBalance() + amount);
         wallets.save(w);
